@@ -14,16 +14,14 @@ class Auth extends StatefulWidget {
 
 class _AuthState extends State<Auth> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = new TextEditingController();
+  final TextEditingController _usernameController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
 
-  String emailValidator(String value) {
+  String usernameValidator(String value) {
     if (value.isEmpty) {
-      return "Email empty";
-    } else if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(value)) {
-      return "Invalid email";
+      return "Username empty";
+    } else if (value.length < 4) {
+      return "Username must contain at least 4 characters";
     }
     return null;
   }
@@ -40,11 +38,11 @@ class _AuthState extends State<Auth> {
   void login(BuildContext context) async {
     var response = await http.post(URL_LOGIN,
         body:
-            '{"email": "${_emailController.text}", "password":"${_passwordController.text}"}');
+            '{"username": "${_usernameController.text}", "password":"${_passwordController.text}"}');
     print('Response status: ${response.statusCode}');
     if (response.statusCode == 200) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Home(_emailController.text)));
+          context, MaterialPageRoute(builder: (context) => Home(_usernameController.text)));
     } else {
       showErrorDialog(context, "Invalid credentials");
     }
@@ -53,12 +51,12 @@ class _AuthState extends State<Auth> {
   void register(BuildContext context) async {
     var response = await http.post(URL_REGISTER,
         body:
-            '{"email": "${_emailController.text}", "password":"${_passwordController.text}"}');
+            '{"username": "${_usernameController.text}", "password":"${_passwordController.text}"}');
     print('Response status: ${response.statusCode}');
     if (response.statusCode == 201) {
       login(context);
     } else {
-      showErrorDialog(context, "Email not available");
+      showErrorDialog(context, "Username not available");
     }
   }
 
@@ -80,10 +78,10 @@ class _AuthState extends State<Auth> {
                   child: Image(image: AssetImage('assets/img/water.png'))),
               Spacer(),
               TextFormField(
-                validator: (value) => emailValidator(value),
-                controller: _emailController,
+                validator: (value) => usernameValidator(value),
+                controller: _usernameController,
                 decoration: const InputDecoration(
-                  labelText: "Email",
+                  labelText: "Username",
                 ),
               ),
               TextFormField(
@@ -125,7 +123,7 @@ class _AuthState extends State<Auth> {
                 ),
               ),
               SizedBox(
-                height: 80,
+                height: 40,
               ),
             ],
           ),

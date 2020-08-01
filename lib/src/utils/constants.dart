@@ -19,7 +19,8 @@ var defaultTheme = ThemeData(
 
 const AWS_HOST = "http://54.153.13.255:8000/";
 const LOCAL_HOST = "http://127.0.0.1:8000/";
-const BASE_URL = LOCAL_HOST;
+//const BASE_URL = LOCAL_HOST;
+const BASE_URL = AWS_HOST;
 
 const URL_REGISTER = BASE_URL + "user/register";
 const URL_LOGIN = BASE_URL + "user/login";

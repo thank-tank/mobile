@@ -13,11 +13,16 @@ class HomeFeed extends StatefulWidget {
 class _HomeFeedState extends State<HomeFeed> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      child: Text(
-        "home page"
-      )
+    return FutureBuilder(
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        return Container(
+          // child: ListView.separated(
+          //   itemCount: 5,
+          //   itemBuilder: ,
+          //   separatorBuilder: ,
+          // ),
+        );
+      },
     );
   }
 }
