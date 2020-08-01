@@ -9,8 +9,10 @@ import 'package:swim/src/widgets/userProfile.dart';
 
 class Home extends StatefulWidget {
   final String jwt;
+  final String username;
+  final String password;
 
-  Home(this.jwt);
+  Home(this.jwt, this.username, this.password);
 
   @override
   _HomeState createState() => _HomeState();
@@ -26,7 +28,7 @@ class _HomeState extends State<Home> {
     super.initState();
     tabs = [
       HomeFeed(widget.jwt),
-      DropGratitude(widget.jwt),
+      DropGratitude(widget.jwt, widget.username, widget.password),
       ChatFeed(widget.jwt),
       UserProfile(widget.jwt),
     ];

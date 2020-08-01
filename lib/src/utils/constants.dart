@@ -24,3 +24,5 @@ const BASE_URL = AWS_HOST;
 
 const URL_REGISTER = BASE_URL + "user/register";
 const URL_LOGIN = BASE_URL + "user/login";
+const URL_POST = BASE_URL + "post/";
+const URL_FEED = BASE_URL + "post/feed";

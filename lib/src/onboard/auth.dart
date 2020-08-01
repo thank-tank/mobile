@@ -42,7 +42,7 @@ class _AuthState extends State<Auth> {
     print('Response status: ${response.statusCode}');
     if (response.statusCode == 200) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Home(_usernameController.text)));
+          context, MaterialPageRoute(builder: (context) => Home("fake jwt", _usernameController.text, _passwordController.text)));
     } else {
       showErrorDialog(context, "Invalid credentials");
     }
