@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swim/src/onboard/auth.dart';
 
-class Welcome extends StatefulWidget {
-  Welcome();
-
-  @override
-  _WelcomeState createState() => _WelcomeState();
-}
-
-class _WelcomeState extends State<Welcome> {
+class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -46,7 +46,7 @@ class _AuthState extends State<Auth> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Home(_emailController.text)));
     } else {
-      showErrorDialog(context, "Error logging in");
+      showErrorDialog(context, "Invalid credentials");
     }
   }
 
