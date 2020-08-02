@@ -21,6 +21,7 @@ class DropScreen extends StatefulWidget {
 
 class _DropScreenState extends State<DropScreen> {
   final TextEditingController _commentController = new TextEditingController();
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
 
   Future<Map<String, dynamic>> getDrop() async {
     final response = await http.get(URL_DROP + widget.id.toString() + "/");
@@ -49,156 +50,161 @@ class _DropScreenState extends State<DropScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getDrop(),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.black,
-            ),
-            body: Container(
-              color: Theme.of(context).backgroundColor,
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              snapshot.data['username'],
-                              style: defaultTheme.textTheme.bodyText2,
-                            ),
-                            Spacer(),
-                            Text(
-                              parseDate(snapshot.data['pub_data']),
-                              style: defaultTheme.textTheme.bodyText2,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          snapshot.data['content'],
-                          style: defaultTheme.textTheme.bodyText1,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          (snapshot.data['post_feed'].length == 1)
-                              ? "${snapshot.data['post_feed'].length} drip"
-                              : "${snapshot.data['post_feed'].length} drips",
-                          style: defaultTheme.textTheme.bodyText2,
-                        ),
-                      ],
+    return RefreshIndicator(
+      key: refreshKey,
+      onRefresh: () { return getDrop(); },
+      child: FutureBuilder(
+        future: getDrop(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.black,
+              ),
+              body: Container(
+                color: Theme.of(context).backgroundColor,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                snapshot.data['username'],
+                                style: defaultTheme.textTheme.bodyText2,
+                              ),
+                              Spacer(),
+                              Text(
+                                parseDate(snapshot.data['pub_data']),
+                                style: defaultTheme.textTheme.bodyText2,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            snapshot.data['content'],
+                            style: defaultTheme.textTheme.bodyText1,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            (snapshot.data['post_feed'].length == 1)
+                                ? "${snapshot.data['post_feed'].length} drip"
+                                : "${snapshot.data['post_feed'].length} drips",
+                            style: defaultTheme.textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Divider(
-                    color: Colors.grey,
-                    indent: 10,
-                    endIndent: 10,
-                  ),
-                  Expanded(
-                    child: ListView.separated(
-                        separatorBuilder: (context, index) => Divider(
-                              color: Colors.grey,
-                              indent: 10,
-                              endIndent: 10,
-                            ),
-                        itemCount: snapshot.data['post_feed'].length + 1,
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return Padding(
-                              padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    child: TextFormField(
-                                      controller: _commentController,
-                                      decoration: const InputDecoration(
-                                        labelText: "drop a comment...",
+                    Divider(
+                      color: Colors.grey,
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                    Expanded(
+                      child: ListView.separated(
+                          separatorBuilder: (context, index) => Divider(
+                                color: Colors.grey,
+                                indent: 10,
+                                endIndent: 10,
+                              ),
+                          itemCount: snapshot.data['post_feed'].length + 1,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return Padding(
+                                padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      child: TextFormField(
+                                        controller: _commentController,
+                                        decoration: const InputDecoration(
+                                          labelText: "drop a comment...",
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Spacer(),
-                                      IconButton(
-                                        onPressed: () {
-                                          postComment(context);
-                                        },
-                                        icon: Icon(Icons.send),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          } else {
-                            int listIndex = index - 1;
-                            return Padding(
-                              padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
-                              child: Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
                                     Row(
                                       children: [
-                                        Text(
-                                          snapshot.data['post_feed'][listIndex]
-                                              ['username'],
-                                          style:
-                                              defaultTheme.textTheme.bodyText2,
-                                        ),
                                         Spacer(),
-                                        Text(
-                                          parseDate(snapshot.data['post_feed']
-                                              [listIndex]['pub_data']),
-                                          style:
-                                              defaultTheme.textTheme.bodyText2,
+                                        IconButton(
+                                          onPressed: () {
+                                            postComment(context);
+                                          },
+                                          icon: Icon(Icons.send),
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      snapshot.data['post_feed'][listIndex]
-                                          ['content'],
-                                      style: defaultTheme.textTheme.bodyText1,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
                                   ],
                                 ),
-                              ),
-                            );
-                          }
-                        }),
-                  ),
-                ],
+                              );
+                            } else {
+                              int listIndex = index - 1;
+                              return Padding(
+                                padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
+                                child: Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            snapshot.data['post_feed']
+                                                [listIndex]['username'],
+                                            style: defaultTheme
+                                                .textTheme.bodyText2,
+                                          ),
+                                          Spacer(),
+                                          Text(
+                                            parseDate(snapshot.data['post_feed']
+                                                [listIndex]['pub_data']),
+                                            style: defaultTheme
+                                                .textTheme.bodyText2,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        snapshot.data['post_feed'][listIndex]
+                                            ['content'],
+                                        style: defaultTheme.textTheme.bodyText1,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+                          }),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        } else if (snapshot.hasError) {
-          print(snapshot.error);
-          showErrorDialog(context, "uh oh: drop of gratitude failed");
-          return Container();
-        } else {
-          return Container(
-            child: SizedBox(
-              height: 50,
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
-      },
+            );
+          } else if (snapshot.hasError) {
+            print(snapshot.error);
+            showErrorDialog(context, "uh oh: drop of gratitude failed");
+            return Container();
+          } else {
+            return Container(
+              child: SizedBox(
+                height: 50,
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }
