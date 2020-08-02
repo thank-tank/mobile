@@ -22,7 +22,7 @@ class _DropGratitudeState extends State<DropGratitude> {
   final TextEditingController _textController = new TextEditingController();
 
   void postDrop(BuildContext context) async {
-    var response = await http.post(URL_POST,
+    var response = await http.post(URL_DROP,
         body:
             '{"content": "${_textController.text}", "username": "${widget.username}", "password":"${widget.password}"}');
     print('Response status: ${response.statusCode}');
@@ -35,7 +35,7 @@ class _DropGratitudeState extends State<DropGratitude> {
   }
 
   Future<String> getDrops() async {
-    var response = await http.get(URL_TOTAL_DROPS);
+    var response = await http.get(URL_OCEAN_TOTAL);
     print('Get Drops Response status: ${response.statusCode}');
     if (response.statusCode == 200) {
       final Map<String, dynamic> ret = json.decode(response.body);

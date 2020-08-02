@@ -21,7 +21,7 @@ class HomeFeed extends StatefulWidget {
 
 class _HomeFeedState extends State<HomeFeed> {
   Future<Map<String, dynamic>> getFeed() async {
-    final response = await http.get(URL_FEED);
+    final response = await http.get(URL_OCEAN);
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> feed = json.decode(response.body);
@@ -46,7 +46,7 @@ class _HomeFeedState extends State<HomeFeed> {
                 indent: 10,
                 endIndent: 10,
               ),
-              itemCount: snapshot.data['feed'].length,
+              itemCount: snapshot.data['ocean'].length,
               itemBuilder: (context, index) => Padding(
                 padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
                 child: GestureDetector(
@@ -58,7 +58,7 @@ class _HomeFeedState extends State<HomeFeed> {
                                 "fake jwt",
                                 widget.username,
                                 widget.password,
-                                snapshot.data['feed'][index]['id'])));
+                                snapshot.data['ocean'][index]['id'])));
                   },
                   child: Container(
                     child: Column(
@@ -67,13 +67,13 @@ class _HomeFeedState extends State<HomeFeed> {
                         Row(
                           children: [
                             Text(
-                              snapshot.data['feed'][index]['username'],
+                              snapshot.data['ocean'][index]['username'],
                               style: defaultTheme.textTheme.bodyText2,
                             ),
                             Spacer(),
                             Text(
                               parseDate(
-                                  snapshot.data['feed'][index]['pub_data']),
+                                  snapshot.data['ocean'][index]['pub_data']),
                               style: defaultTheme.textTheme.bodyText2,
                             ),
                           ],
@@ -82,17 +82,17 @@ class _HomeFeedState extends State<HomeFeed> {
                           height: 10,
                         ),
                         Text(
-                          snapshot.data['feed'][index]['content'],
+                          snapshot.data['ocean'][index]['content'],
                           style: defaultTheme.textTheme.bodyText1,
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         Text(
-                          (snapshot.data['feed'][index]['post_feed'].length ==
+                          (snapshot.data['ocean'][index]['drip_stream'].length ==
                                   1)
-                              ? "${snapshot.data['feed'][index]['post_feed'].length} drip"
-                              : "${snapshot.data['feed'][index]['post_feed'].length} drips",
+                              ? "${snapshot.data['ocean'][index]['drip_stream'].length} drip"
+                              : "${snapshot.data['ocean'][index]['drip_stream'].length} drips",
                           style: defaultTheme.textTheme.bodyText2,
                         ),
                       ],

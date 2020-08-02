@@ -18,9 +18,20 @@ class Welcome extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                  height: 100,
-                  margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                  child: Image(image: AssetImage('assets/img/water.png'))),
+                height: 100,
+                margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                child: Image(
+                  image: AssetImage('assets/img/water.png'),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                "ThankTank",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline1,
+              ),
               Spacer(),
               Text(
                 '"We ourselves feel that what we are doing is just a drop in the ocean. But the ocean would be less because of that missing drop."',

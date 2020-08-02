@@ -21,7 +21,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int tabIndex = 0;
   List<Widget> tabs;
-  List<String> tabLabels = ["Home", "Drop Gratitude", "Chat", "Profile"];
+  List<String> tabLabels = ["Gratitude Ocean", "ThankTank", "Drips", "Your Thank Stream"];
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
       HomeFeed(widget.jwt, widget.username, widget.password),
       DropGratitude(widget.jwt, widget.username, widget.password),
       ChatFeed(widget.jwt),
-      UserProfile(widget.jwt),
+      UserProfile(widget.jwt, widget.username, widget.password),
     ];
   }
 
@@ -61,27 +61,27 @@ class _HomeState extends State<Home> {
                   Icons.home,
                   color: Theme.of(context).disabledColor,
                   size: 35,
-                  semanticLabel: "Home",
+                  semanticLabel: "Ocean",
                 ),
                 activeIcon: Icon(
                   Icons.home,
                   color: Theme.of(context).buttonColor,
                   size: 35,
-                  semanticLabel: "Home",
+                  semanticLabel: "Ocean",
                 ),
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.add_circle_outline,
+                icon: ImageIcon(
+                  AssetImage("assets/img/water.png"),
                   color: Theme.of(context).disabledColor,
-                  size: 35,
-                  semanticLabel: "Home",
+                  size: 30,
+                  semanticLabel: "ThankTank",
                 ),
-                activeIcon: Icon(
-                  Icons.add_circle_outline,
+                activeIcon: ImageIcon(
+                  AssetImage("assets/img/water.png"),
                   color: Theme.of(context).buttonColor,
-                  size: 35,
-                  semanticLabel: "Home",
+                  size: 30,
+                  semanticLabel: "ThankTank",
                 ),
               ),
               BottomNavigationBarItem(
@@ -89,13 +89,13 @@ class _HomeState extends State<Home> {
                   Icons.chat,
                   color: Theme.of(context).disabledColor,
                   size: 35,
-                  semanticLabel: "Chat",
+                  semanticLabel: "Drips",
                 ),
                 activeIcon: Icon(
                   Icons.chat,
                   color: Theme.of(context).buttonColor,
                   size: 35,
-                  semanticLabel: "Chat",
+                  semanticLabel: "Drips",
                 ),
               ),
               BottomNavigationBarItem(
@@ -103,13 +103,13 @@ class _HomeState extends State<Home> {
                   Icons.person,
                   color: Theme.of(context).disabledColor,
                   size: 35,
-                  semanticLabel: "Profile",
+                  semanticLabel: "Your Thank Stream",
                 ),
                 activeIcon: Icon(
                   Icons.person,
                   color: Theme.of(context).buttonColor,
                   size: 35,
-                  semanticLabel: "Profile",
+                  semanticLabel: "Your Thank Stream",
                 ),
               ),
             ],

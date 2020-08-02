@@ -20,12 +20,11 @@ class DropScreen extends StatefulWidget {
 }
 
 class _DropScreenState extends State<DropScreen> {
-  final TextEditingController _commentController = new TextEditingController();
+  final TextEditingController _dripController = new TextEditingController();
   var refreshKey = GlobalKey<RefreshIndicatorState>();
 
   Future<Map<String, dynamic>> getDrop() async {
     final response = await http.get(URL_DROP + widget.id.toString() + "/");
-
     if (response.statusCode == 200) {
       final Map<String, dynamic> drop = json.decode(response.body);
       print(drop);
@@ -35,16 +34,16 @@ class _DropScreenState extends State<DropScreen> {
     }
   }
 
-  void postComment(BuildContext context) async {
-    var response = await http.post(URL_DROP_COMMENT,
+  void postDrip(BuildContext context) async {
+    var response = await http.post(URL_DRIP,
         body:
-            '{"username": "${widget.username}", "post_id":"${widget.id}", "content":"${_commentController.text}"}');
+            '{"username": "${widget.username}", "drop_id":"${widget.id}", "content":"${_dripController.text}"}');
     print('Response status: ${response.statusCode}');
     if (response.statusCode == 201) {
       print("success");
-      _commentController.clear();
+      _dripController.clear();
     } else {
-      showErrorDialog(context, "Invalid credentials");
+      showErrorDialog(context, "Failed to post drip");
     }
   }
 
@@ -52,7 +51,9 @@ class _DropScreenState extends State<DropScreen> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       key: refreshKey,
-      onRefresh: () { return getDrop(); },
+      onRefresh: () {
+        return getDrop();
+      },
       child: FutureBuilder(
         future: getDrop(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -94,9 +95,9 @@ class _DropScreenState extends State<DropScreen> {
                             height: 10,
                           ),
                           Text(
-                            (snapshot.data['post_feed'].length == 1)
-                                ? "${snapshot.data['post_feed'].length} drip"
-                                : "${snapshot.data['post_feed'].length} drips",
+                            (snapshot.data['drip_stream'].length == 1)
+                                ? "${snapshot.data['drip_stream'].length} drip"
+                                : "${snapshot.data['drip_stream'].length} drips",
                             style: defaultTheme.textTheme.bodyText2,
                           ),
                         ],
@@ -114,7 +115,7 @@ class _DropScreenState extends State<DropScreen> {
                                 indent: 10,
                                 endIndent: 10,
                               ),
-                          itemCount: snapshot.data['post_feed'].length + 1,
+                          itemCount: snapshot.data['drip_stream'].length + 1,
                           itemBuilder: (context, index) {
                             if (index == 0) {
                               return Padding(
@@ -123,9 +124,9 @@ class _DropScreenState extends State<DropScreen> {
                                   children: [
                                     Container(
                                       child: TextFormField(
-                                        controller: _commentController,
+                                        controller: _dripController,
                                         decoration: const InputDecoration(
-                                          labelText: "drop a comment...",
+                                          labelText: "drip a comment...",
                                         ),
                                       ),
                                     ),
@@ -134,9 +135,11 @@ class _DropScreenState extends State<DropScreen> {
                                         Spacer(),
                                         IconButton(
                                           onPressed: () {
-                                            postComment(context);
+                                            postDrip(context);
                                           },
-                                          icon: Icon(Icons.send),
+                                          icon: ImageIcon(
+                                            AssetImage("assets/img/water.png"),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -155,15 +158,16 @@ class _DropScreenState extends State<DropScreen> {
                                       Row(
                                         children: [
                                           Text(
-                                            snapshot.data['post_feed']
+                                            snapshot.data['drip_stream']
                                                 [listIndex]['username'],
                                             style: defaultTheme
                                                 .textTheme.bodyText2,
                                           ),
                                           Spacer(),
                                           Text(
-                                            parseDate(snapshot.data['post_feed']
-                                                [listIndex]['pub_data']),
+                                            parseDate(
+                                                snapshot.data['drip_stream']
+                                                    [listIndex]['pub_data']),
                                             style: defaultTheme
                                                 .textTheme.bodyText2,
                                           ),
@@ -173,7 +177,7 @@ class _DropScreenState extends State<DropScreen> {
                                         height: 10,
                                       ),
                                       Text(
-                                        snapshot.data['post_feed'][listIndex]
+                                        snapshot.data['drip_stream'][listIndex]
                                             ['content'],
                                         style: defaultTheme.textTheme.bodyText1,
                                       ),

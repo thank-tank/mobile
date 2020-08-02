@@ -9,6 +9,11 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Theme.of(context).backgroundColor,
+      centerTitle: true,
+      title: Text(
+        this.pageName,
+        style: Theme.of(context).textTheme.headline1,
+      ),
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 8),
@@ -17,8 +22,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
               Icons.notifications,
               size: 30,
             ),
-            onPressed: () {
-            },
+            onPressed: () {},
           ),
         ),
         Padding(
@@ -28,8 +32,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
               Icons.search,
               size: 30,
             ),
-            onPressed: () {
-            },
+            onPressed: () {},
             padding: EdgeInsets.zero,
           ),
         ),

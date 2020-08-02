@@ -42,7 +42,10 @@ class _AuthState extends State<Auth> {
     print('Response status: ${response.statusCode}');
     if (response.statusCode == 200) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Home("fake jwt", _usernameController.text, _passwordController.text)));
+          context,
+          MaterialPageRoute(
+              builder: (context) => Home("fake jwt", _usernameController.text,
+                  _passwordController.text)));
     } else {
       showErrorDialog(context, "Invalid credentials");
     }
@@ -73,9 +76,20 @@ class _AuthState extends State<Auth> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                  height: 100,
-                  margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                  child: Image(image: AssetImage('assets/img/water.png'))),
+                height: 100,
+                margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                child: Image(
+                  image: AssetImage('assets/img/water.png'),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                "ThankTank",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline1,
+              ),
               Spacer(),
               TextFormField(
                 validator: (value) => usernameValidator(value),
@@ -123,7 +137,7 @@ class _AuthState extends State<Auth> {
                 ),
               ),
               SizedBox(
-                height: 40,
+                height: 70,
               ),
             ],
           ),
