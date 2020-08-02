@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     tabs = [
-      HomeFeed(widget.jwt),
+      HomeFeed(widget.jwt, widget.username, widget.password),
       DropGratitude(widget.jwt, widget.username, widget.password),
       ChatFeed(widget.jwt),
       UserProfile(widget.jwt),

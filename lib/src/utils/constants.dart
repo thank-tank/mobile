@@ -12,7 +12,8 @@ var defaultTheme = ThemeData(
     headline1: TextStyle(fontSize: 20.0, color: Colors.white),
     headline2: TextStyle(fontSize: 16.0, color: Colors.white),
     headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-    bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+    bodyText1: TextStyle(fontSize: 22.0, color: Colors.white),
+    bodyText2: TextStyle(fontSize: 10.0, color: Colors.white),
     button: TextStyle(fontSize: 14.0, color: Colors.white),
   ),
 );
@@ -26,3 +27,6 @@ const URL_REGISTER = BASE_URL + "user/register";
 const URL_LOGIN = BASE_URL + "user/login";
 const URL_POST = BASE_URL + "post/";
 const URL_FEED = BASE_URL + "post/feed";
+const URL_DROP = BASE_URL + "post/drop/";
+const URL_DROP_COMMENT = BASE_URL + "post/response";
+const URL_TOTAL_DROPS = BASE_URL + "post/total";

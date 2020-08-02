@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:http/http.dart' as http;
@@ -19,7 +21,6 @@ class _DropGratitudeState extends State<DropGratitude> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _textController = new TextEditingController();
 
-
   void postDrop(BuildContext context) async {
     var response = await http.post(URL_POST,
         body:
@@ -30,6 +31,18 @@ class _DropGratitudeState extends State<DropGratitude> {
       _textController.clear();
     } else {
       showErrorDialog(context, "uh oh: drop of gratitude failed");
+    }
+  }
+
+  Future<String> getDrops() async {
+    var response = await http.get(URL_TOTAL_DROPS);
+    print('Get Drops Response status: ${response.statusCode}');
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> ret = json.decode(response.body);
+      return ret['total'].toString();
+    } else {
+      showErrorDialog(context, "uh oh: drop of gratitude failed");
+      return "0";
     }
   }
 
@@ -44,9 +57,11 @@ class _DropGratitudeState extends State<DropGratitude> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextFormField(
+              textAlign: TextAlign.center,
               controller: _textController,
               decoration: const InputDecoration(
                 labelText: "drop some gratitude",
+                labelStyle: TextStyle(),
               ),
             ),
             SizedBox(
@@ -58,13 +73,50 @@ class _DropGratitudeState extends State<DropGratitude> {
               child: InkWell(
                 onTap: () {
                   postDrop(context);
-                  // send HTTP Post request to backend to create drop of gratitude
-                  // constants.dart
                 },
                 child: Image(
                   image: AssetImage('assets/img/water.png'),
                 ),
               ),
+            ),
+            Spacer(),
+            FutureBuilder(
+              future: getDrops(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.hasData) {
+                  return Text(
+                    snapshot.data,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  );
+                } else {
+                  return Text(
+                    "0",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  );
+                }
+              },
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              "drops donated",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 15,
             ),
           ],
         ),

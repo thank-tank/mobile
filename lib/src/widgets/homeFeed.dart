@@ -3,12 +3,17 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:http/http.dart' as http;
+import 'package:swim/src/utils/alerts.dart';
 import 'package:swim/src/utils/constants.dart';
+import 'package:swim/src/utils/utils.dart';
+import 'package:swim/src/widgets/dropScreen.dart';
 
 class HomeFeed extends StatefulWidget {
   final String jwt;
+  final String username;
+  final String password;
 
-  HomeFeed(this.jwt);
+  HomeFeed(this.jwt, this.username, this.password);
 
   @override
   _HomeFeedState createState() => _HomeFeedState();
@@ -19,10 +24,9 @@ class _HomeFeedState extends State<HomeFeed> {
     final response = await http.get(URL_FEED);
 
     if (response.statusCode == 200) {
-      var feed = json.decode(response.body);
+      final Map<String, dynamic> feed = json.decode(response.body);
       print(feed);
-      Map<String, dynamic> feedParsed = Map<String, dynamic>();
-      return feedParsed['feed'];
+      return feed;
     } else {
       throw Exception('Failed to load ');
     }
@@ -35,19 +39,73 @@ class _HomeFeedState extends State<HomeFeed> {
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.hasData) {
           return Container(
+            color: Theme.of(context).backgroundColor,
             child: ListView.separated(
               separatorBuilder: (context, index) => Divider(
                 color: Colors.grey,
+                indent: 10,
+                endIndent: 10,
               ),
-              itemCount: snapshot.data.feed.length,
+              itemCount: snapshot.data['feed'].length,
               itemBuilder: (context, index) => Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Center(child: Text("Index $index")),
+                padding: EdgeInsets.fromLTRB(15, 8, 15, 8),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DropScreen(
+                                "fake jwt",
+                                widget.username,
+                                widget.password,
+                                snapshot.data['feed'][index]['id'])));
+                  },
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              snapshot.data['feed'][index]['username'],
+                              style: defaultTheme.textTheme.bodyText2,
+                            ),
+                            Spacer(),
+                            Text(
+                              parseDate(
+                                  snapshot.data['feed'][index]['pub_data']),
+                              style: defaultTheme.textTheme.bodyText2,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          snapshot.data['feed'][index]['content'],
+                          style: defaultTheme.textTheme.bodyText1,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          (snapshot.data['feed'][index]['post_feed'].length ==
+                                  1)
+                              ? "${snapshot.data['feed'][index]['post_feed'].length} drip"
+                              : "${snapshot.data['feed'][index]['post_feed'].length} drips",
+                          style: defaultTheme.textTheme.bodyText2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
           );
         } else if (snapshot.hasError) {
           print(snapshot.error);
+          showErrorDialog(context, "uh oh: drop of gratitude failed");
+          return Container();
         } else {
           return Container(
             child: CircularProgressIndicator(),
