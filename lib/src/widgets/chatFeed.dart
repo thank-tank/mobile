@@ -49,7 +49,7 @@ class _ChatFeedState extends State<ChatFeed> {
                 itemBuilder: (context, index) {
                   int newIndex = index;
                   if (snapshot.data[index]['username'] == widget.username) {
-                    newIndex++;
+                    newIndex = snapshot.data.length - 1;
                   }
                   return Padding(
                     padding: EdgeInsets.fromLTRB(15, 8, 15, 8),

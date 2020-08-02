@@ -42,7 +42,7 @@ class Welcome extends StatelessWidget {
                 height: 30,
               ),
               Text(
-                "- Mother Theresa",
+                "- Mother Teresa",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headline2,
               ),

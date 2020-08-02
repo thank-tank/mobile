@@ -22,7 +22,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int tabIndex = 0;
   List<Widget> tabs;
-  List<String> tabLabels = ["Gratitude Ocean", "ThankTank", "Drips", "Your Stream"];
+  List<String> tabLabels = ["Gratitude Ocean", "ThankTank", "Drips", "My Stream"];
 
   @override
   void initState() {

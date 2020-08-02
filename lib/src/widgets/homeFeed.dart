@@ -82,7 +82,7 @@ class _HomeFeedState extends State<HomeFeed> {
                           height: 10,
                         ),
                         Text(
-                          snapshot.data['ocean'][index]['content'],
+                          "\"${snapshot.data['ocean'][index]['content']}\"",
                           style: defaultTheme.textTheme.bodyText1,
                         ),
                         SizedBox(

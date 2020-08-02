@@ -88,7 +88,7 @@ class _DropScreenState extends State<DropScreen> {
                             height: 10,
                           ),
                           Text(
-                            snapshot.data['content'],
+                            "\"${snapshot.data['content']}\"",
                             style: defaultTheme.textTheme.bodyText1,
                           ),
                           SizedBox(
