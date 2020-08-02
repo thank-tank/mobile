@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "487919957441",
+    "firebase_url": "https://thanktank-ebb68.firebaseio.com",
+    "project_id": "thanktank-ebb68",
+    "storage_bucket": "thanktank-ebb68.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487919957441:android:47a60d6f44fc00128c6b40",
+        "android_client_info": {
+          "package_name": "com.example.swim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "487919957441-qj5h1h2q6ivdd14sq4i20er8jvdrdfrh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQTJdVsVcUuMOqkikDBFtJ14NM-t3fgdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "487919957441-qj5h1h2q6ivdd14sq4i20er8jvdrdfrh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "487919957441-5i5goo51tuq3hcveb8p92ttj3com41u4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.swim"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

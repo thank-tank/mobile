@@ -20,9 +20,9 @@ class HomeFeed extends StatefulWidget {
 }
 
 class _HomeFeedState extends State<HomeFeed> {
+
   Future<Map<String, dynamic>> getFeed() async {
     final response = await http.get(URL_OCEAN);
-
     if (response.statusCode == 200) {
       final Map<String, dynamic> feed = json.decode(response.body);
       print(feed);

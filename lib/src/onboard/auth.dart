@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:swim/src/onboard/home.dart';
@@ -41,11 +43,14 @@ class _AuthState extends State<Auth> {
             '{"username": "${_usernameController.text}", "password":"${_passwordController.text}"}');
     print('Response status: ${response.statusCode}');
     if (response.statusCode == 200) {
+      final Map<String, dynamic> ret = json.decode(response.body);
+      print(ret);
+      print(ret['id']);
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => Home("fake jwt", _usernameController.text,
-                  _passwordController.text)));
+                  _passwordController.text, ret['id'])));
     } else {
       showErrorDialog(context, "Invalid credentials");
     }

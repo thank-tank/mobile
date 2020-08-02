@@ -11,8 +11,9 @@ class Home extends StatefulWidget {
   final String jwt;
   final String username;
   final String password;
+  final String userId;
 
-  Home(this.jwt, this.username, this.password);
+  Home(this.jwt, this.username, this.password, this.userId);
 
   @override
   _HomeState createState() => _HomeState();
@@ -21,7 +22,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int tabIndex = 0;
   List<Widget> tabs;
-  List<String> tabLabels = ["Gratitude Ocean", "ThankTank", "Drips", "Your Thank Stream"];
+  List<String> tabLabels = ["Gratitude Ocean", "ThankTank", "Drips", "Your Stream"];
 
   @override
   void initState() {
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
     tabs = [
       HomeFeed(widget.jwt, widget.username, widget.password),
       DropGratitude(widget.jwt, widget.username, widget.password),
-      ChatFeed(widget.jwt),
+      ChatFeed(widget.jwt, widget.username, widget.password, widget.userId),
       UserProfile(widget.jwt, widget.username, widget.password),
     ];
   }
@@ -54,7 +55,6 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.only(top: 5),
           margin: EdgeInsets.all(0),
           child: CupertinoTabBar(
-            border: Border(top: BorderSide.none),
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(
