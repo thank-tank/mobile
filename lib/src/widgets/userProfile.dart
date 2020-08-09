@@ -20,11 +20,11 @@ class UserProfile extends StatefulWidget {
 
 class _HomeFeedState extends State<UserProfile> {
   Future<Map<String, dynamic>> getFeed() async {
-    final response = await http.get(URL_OCEAN + "/" + widget.username);
+    final response = await http.get(URL_OCEAN + "/" + (widget.username).toString() + "/");
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> feed = json.decode(response.body);
-      print(feed);
+      print('user feed: ' +  feed.toString());
       return feed;
     } else {
       throw Exception('Failed to load ');

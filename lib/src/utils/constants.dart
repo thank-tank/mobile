@@ -18,7 +18,7 @@ var defaultTheme = ThemeData(
   ),
 );
 
-const AWS_HOST = "http://54.153.13.255:8000/";
+const AWS_HOST = "https://dev.thanktank.app/api/1/";
 const LOCAL_HOST = "http://127.0.0.1:60620/";
 //const BASE_URL = LOCAL_HOST;
 const BASE_URL = AWS_HOST;

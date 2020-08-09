@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
-import 'package:swim/src/widgets/chatFeed.dart';
 import 'package:swim/src/widgets/dropGratitude.dart';
 import 'package:swim/src/widgets/homeFeed.dart';
 import 'package:swim/src/widgets/menuOverlay.dart';
@@ -22,7 +21,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int tabIndex = 0;
   List<Widget> tabs;
-  List<String> tabLabels = ["Gratitude Ocean", "ThankTank", "Drips", "My Stream"];
+  List<String> tabLabels = ["Gratitude Ocean", "ThankTank", "My Stream"];
 
   @override
   void initState() {
@@ -30,7 +29,6 @@ class _HomeState extends State<Home> {
     tabs = [
       HomeFeed(widget.jwt, widget.username, widget.password),
       DropGratitude(widget.jwt, widget.username, widget.password),
-      ChatFeed(widget.jwt, widget.username, widget.password, widget.userId),
       UserProfile(widget.jwt, widget.username, widget.password),
     ];
   }
@@ -86,30 +84,16 @@ class _HomeState extends State<Home> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.chat,
-                  color: Theme.of(context).disabledColor,
-                  size: 35,
-                  semanticLabel: "Drips",
-                ),
-                activeIcon: Icon(
-                  Icons.chat,
-                  color: Theme.of(context).buttonColor,
-                  size: 35,
-                  semanticLabel: "Drips",
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
                   Icons.person,
                   color: Theme.of(context).disabledColor,
                   size: 35,
-                  semanticLabel: "Your Thank Stream",
+                  semanticLabel: "Your Stream",
                 ),
                 activeIcon: Icon(
                   Icons.person,
                   color: Theme.of(context).buttonColor,
                   size: 35,
-                  semanticLabel: "Your Thank Stream",
+                  semanticLabel: "Your Stream",
                 ),
               ),
             ],
